@@ -3,11 +3,11 @@ entries:
   ssc:
   - apiVersion: v1
     appVersion: 23.1.1.0007
-    created: "2023-12-05T11:59:37.919333+01:00"
+    created: "2023-12-06T08:52:33.8435376+01:00"
     description: A Helm chart for Fortify Software Security Center application
-    digest: a4c1db110cb1bc3fcbaa2128635cc1b50485d64e872cc0fe5c9abe4b5461ff4f
+    digest: 5d8cb8f0ba7af5d6e177aa19dc0cfdf65db303e6d197c779c0e608ef84d4f82a
     name: ssc
     urls:
     - https://github.com/TheSecurityDOJO/helm3-charts/releases/download/ssc-1.1.2311007/ssc-1.1.2311007.tgz
     version: 1.1.2311007
-generated: "2023-12-05T11:59:37.918297+01:00"
+generated: "2023-12-06T08:52:33.8425386+01:00"
