@@ -41,6 +41,6 @@ entries:
     digest: eb9c227ccbede2cf9b09518cb0aa54fd4b1b44bf9d18daf637276cc4e1bc57a5
     name: ssc
     urls:
-    - https://thesecuritydojo.github.io/helm3-charts/releases/download/ssc-1.1.2311008/ssc-1.1.2311008.tgz
+    - https://github.com/TheSecurityDOJO/helm3-charts/releases/download/ssc-1.1.2311008/ssc-1.1.2311008.tgz
     version: 1.1.2311008
 generated: "2023-12-12T16:41:59.6448664+01:00"
