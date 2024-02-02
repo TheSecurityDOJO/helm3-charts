@@ -63,7 +63,7 @@ entries:
     urls:
     - https://github.com/TheSecurityDOJO/helm3-charts/releases/download/scancentral-sast-23.1.1/scancentral-sast-23.1.1.tgz
     version: 23.1.1
-    ssc:
+  ssc:
   - apiVersion: v1
     appVersion: 23.2.0.0154
     created: "2024-02-02T10:52:13.7461857+01:00"
