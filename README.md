@@ -1,5 +1,15 @@
 # Fortify Helm Charts 
 
+# Build helm chart
+
+```
+helm package ssc
+```
+
+```
+helm repo index --url https://github.com/TheSecurityDOJO/helm3-charts/releases/download/
+```
+
 
 <!-- START-INCLUDE:p.marketing-intro.md -->
 
