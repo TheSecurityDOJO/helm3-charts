@@ -71,7 +71,7 @@ entries:
     digest: ca997c83ff8ed15d7ad6225d2f2133d60376f7094a29079f517a540bfa872d2e
     name: ssc
     urls:
-    - https://github.com/TheSecurityDOJO/helm3-charts/releases/download/ssc-1.1.2311007/ssc-1.1.2320154.tgz
+    - https://github.com/TheSecurityDOJO/helm3-charts/releases/download/ssc-1.1.2320154/ssc-1.1.2320154.tgz
     version: 1.1.2320154
   - apiVersion: v1
     appVersion: 23.1.1.0007
