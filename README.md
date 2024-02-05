@@ -7,7 +7,7 @@ helm package ssc
 ```
 
 ```
-helm repo index --url https://github.com/TheSecurityDOJO/helm3-charts/releases/download/
+helm repo index --url https://github.com/TheSecurityDOJO/helm3-charts/releases/download/ .
 ```
 
 
