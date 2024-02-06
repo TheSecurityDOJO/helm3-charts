@@ -57,32 +57,32 @@ spec:
           {{- with .Values.secretRef }}
             {{- if .keys.sscAutoconfigEntry }}
             - name: COM_FORTIFY_SSC_LICENSEPATH
-              value: "{{ required "The secretRef.keys.sscLicenseEntry config value is required!" .keys.sscLicenseEntry | toString | trim }}"
+              value: "/app/secrets/{{ required "The secretRef.keys.sscLicenseEntry config value is required!" .keys.sscLicenseEntry | toString | trim }}"
             - name: COM_FORTIFY_SSC_AUTOCONFIGPATH
-              value: "{{ required "The secretRef.keys.sscAutoconfigEntry config value is required!" .keys.sscAutoconfigEntry | toString | trim }}"
+              value: "/app/secrets/{{ required "The secretRef.keys.sscAutoconfigEntry config value is required!" .keys.sscAutoconfigEntry | toString | trim }}"
             {{- end }}
             {{- with .keys.sscSecretKeyEntry }}
             - name: COM_FORTIFY_SSC_SECRETKEY
-              value: "{{ required "The secretRef.keys.sscSecretKeyEntry config value is required!" . | toString | trim }}"
+              value: "/app/secrets/{{ required "The secretRef.keys.sscSecretKeyEntry config value is required!" . | toString | trim }}"
             {{- end }}
             - name: HTTP_SERVER_CERTIFICATE_KEYSTORE_FILE
-              value: "{{ required "The secretRef.keys.httpCertificateKeystoreFileEntry config value is required!" .keys.httpCertificateKeystoreFileEntry | toString | trim }}"
+              value: "/app/secrets/{{ required "The secretRef.keys.httpCertificateKeystoreFileEntry config value is required!" .keys.httpCertificateKeystoreFileEntry | toString | trim }}"
             - name: HTTP_SERVER_CERTIFICATE_KEYSTORE_PASSWORD_FILE
-              value: "{{ required "The secretRef.keys.httpCertificateKeystorePasswordEntry config value is required!" .keys.httpCertificateKeystorePasswordEntry | toString | trim }}"
+              value: "/app/secrets/{{ required "The secretRef.keys.httpCertificateKeystorePasswordEntry config value is required!" .keys.httpCertificateKeystorePasswordEntry | toString | trim }}"
             - name: HTTP_SERVER_CERTIFICATE_KEY_PASSWORD_FILE
-              value: "{{ required "The secretRef.keys.httpCertificateKeyPasswordEntry config value is required!" .keys.httpCertificateKeyPasswordEntry | toString | trim }}"
+              value: "/app/secrets/{{ required "The secretRef.keys.httpCertificateKeyPasswordEntry config value is required!" .keys.httpCertificateKeyPasswordEntry | toString | trim }}"
             {{- if .keys.httpTruststoreFileEntry }}
             - name: HTTP_SERVER_TRUSTSTORE_FILE
-              value: "{{ required "The secretRef.keys.httpTruststoreFileEntry config value is required!" .keys.httpTruststoreFileEntry | toString | trim }}"
+              value: "/app/secrets/{{ required "The secretRef.keys.httpTruststoreFileEntry config value is required!" .keys.httpTruststoreFileEntry | toString | trim }}"
             - name: HTTP_SERVER_TRUSTSTORE_PASSWORD_FILE
-              value: "{{ required "The secretRef.keys.httpTruststorePasswordEntry config value is required!" .keys.httpTruststorePasswordEntry | toString | trim }}"
+              value: "/app/secrets/{{ required "The secretRef.keys.httpTruststorePasswordEntry config value is required!" .keys.httpTruststorePasswordEntry | toString | trim }}"
             {{- end }}
             {{- if .keys.jvmTruststoreFileEntry }}
             - name: JVM_TRUSTSTORE_FILE
-              value: "{{ required "The secretRef.keys.jvmTruststoreFileEntry config value is required!" .keys.jvmTruststoreFileEntry | toString | trim }}"
+              value: "/app/secrets/{{ required "The secretRef.keys.jvmTruststoreFileEntry config value is required!" .keys.jvmTruststoreFileEntry | toString | trim }}"
             - name: JVM_TRUSTSTORE_PASSWORD_FILE
               {{- $jvmTruststorePasswordEntry := .keys.jvmTruststorePasswordEntry | default .keys.jmvTruststorePasswordEntry }}{{/* provide backward compatibility */}}
-              value: "{{ required "The secretRef.keys.jvmTruststorePasswordEntry config value is required!" $jvmTruststorePasswordEntry | toString | trim }}"
+              value: "/app/secrets/{{ required "The secretRef.keys.jvmTruststorePasswordEntry config value is required!" $jvmTruststorePasswordEntry | toString | trim }}"
             {{- end }}
           {{- end }}
           {{- with .Values.webapp.environment }}
@@ -91,9 +91,11 @@ spec:
           image: "{{ .Values.image.repositoryPrefix }}{{ .Values.image.webapp }}:{{ include "ssc.image.tag" $context }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           volumeMounts:
+            {{- with .Values.secretRef.name }}
             - name: secrets-volume
               readOnly: true
               mountPath: "/app/secrets"
+            {{- end }}
             - name: persistent-volume
               mountPath: "/fortify"
             - name: etc-volume
@@ -107,9 +109,11 @@ spec:
                 - all
             readOnlyRootFilesystem: true
       volumes:
+        {{- if .Values.secretRef.name }}
         - name: secrets-volume
           secret:
             secretName: {{ required "The secretRef.name config value is required!" .Values.secretRef.name }}
+        {{- end }}
         - name: persistent-volume
           persistentVolumeClaim:
             claimName: {{ include "ssc.fullcomponentname" (merge (dict "component" "pvc") . ) }}
@@ -133,7 +137,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 -}}
     {{- end }}
-      automountServiceAccountToken: true
+      automountServiceAccountToken: {{ .Values.webapp.automountServiceAccountToken }}
       securityContext:
         runAsNonRoot: true
         # should be kept in sync with image metadata

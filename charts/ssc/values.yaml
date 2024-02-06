@@ -28,6 +28,9 @@ nameOverride: ""
 # fullnameOverride is a value to override fully-qualified service, defaults to "{deployment_name}-{service_name}"
 fullnameOverride: ""
 
+webapp:
+  automountServiceAccountToken: false
+
 
 # service is a map of the Kubernetes service resource options used to expose the SSC service
 service:
